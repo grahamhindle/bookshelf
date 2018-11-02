@@ -5,19 +5,22 @@ import PropTypes from 'prop-types'
 class BookShelfManager extends Component {
   constructor(props){
     super(props)
-    this.state = {value:'currentlyReading'}
+    this.state = {value:"currentlyReading"}
   }
 
   componentDidMount() {
     // get shelf the book is on and 
     //set the option in the menu
-    
-      this.setState({value: this.props.shelfId 
+      console.log("bsm", this.props.book.shelf)
+      this.setState({value: this.props.book.shelf 
       })
-      console.log('didmount',this.state.value)
+      
   }
   handleChange = ((e)=>{
     this.setState({value: e.target.value});
+    console.log("change state",e.target.value)
+    this.props.onUpdate(e.target.value)
+
   })
   render() {
     return(

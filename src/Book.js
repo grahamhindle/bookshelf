@@ -4,25 +4,54 @@ import PropTypes from 'prop-types'
 import BookShelfManager from './BookShelfManager'
 
 class Book extends Component {
+  state = {
+    book:[],
+    
+  }
   
-  
+  componentDidMount(){
+    
+    this.setState(()=>({
+      book: this.props.book
+    }))
+  }
+      
+    
+
+  updateBookStatus=((value)=>{
+    console.log("ubs",value)
+    let newBook = Object.assign({}, this.state.book)
+    
+    newBook.shelf = value
+    console.log("newBook",newBook)
+    this.setState({newBook})
+
+    this.props.changeShelf(newBook)
+    
+  })
+
   render(){
     
-    
-    const url = `url(${this.props.list.url})`
-    console.log('props',this.props)
-    const shelfId = this.props.key
+    const book = this.props.book;
+    const {book2} =this.state.book
+    console.log("book",this.props)
     return(
       <li>
         <div className="book">
           <div className="book-top">
             <div className="book-cover"
               style={{ width: 128, height: 193, 
-              backgroundImage: url}}>
+              backgroundImage:`url(${this.props.book.imageLinks.thumbnail})`}}>
             </div>
-            <BookShelfManager shelfID={shelfId} status={this.props.shelf} />
+            <BookShelfManager 
+                      key = {book.shelf.name}
+                      book = {this.props.book} 
+                      onUpdate = {this.updateBookStatus}
+                      />
           </div>
         </div>
+        <div className="book-title">{this.state.book.title}</div>
+        <div className="book-authors">{this.state.book.authors}</div>
       </li>
     )
   }
