@@ -6,9 +6,14 @@ import Book from './Book'
 
 
 class BookSearch extends Component {
-  state = {
-    searchCriteria: "",
+  constructor(props){
+    super(props)
+    this.state = {
+      searchCriteria: "",
+    }
+    this.onShelfChanger = this.onShelfChanger.bind(this)
   }
+  
 
   handleSubmit = ((e)=>{
     e.preventDefault();

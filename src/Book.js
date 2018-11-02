@@ -4,10 +4,14 @@ import PropTypes from 'prop-types'
 import BookShelfManager from './BookShelfManager'
 
 class Book extends Component {
-  state = {
-    book:[],
-    
+  constructor(props){
+    super(props)
+    this.state = {
+      book:[],
+    }
+    this.updateBookStatus = this.updateBookStatus.bind(this)
   }
+  
   
   componentDidMount(){
     

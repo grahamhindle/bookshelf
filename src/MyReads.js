@@ -16,6 +16,10 @@ const bookshelves = [
 ]
 
 class MyReads extends Component {
+  constructor(props){
+    super(props)
+    this.onUpdate = this.onUpdate.bind(this)
+  }
   
 
   onUpdate=((book)=> {

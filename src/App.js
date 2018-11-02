@@ -35,16 +35,31 @@ class App extends Component {
 
 updateStatus= ((book)=>{
   //update the status in the shelf
-    const result = this.state.books.findIndex(id => id.id === book.id)
-
-
+    const newBooks = this.state.books.map(b =>{
+      if ( b.id !== book.id )return b
+      
+      return {
+        ...b,
+        shelf:  book.shelf
+      }
+      
+    })
+    console.log("found it",newBooks)
+    this.setState({books : newBooks})
+    
+    /*
     let newBook = Object.assign({}, this.state.book)
+    const result = this.state.books.findIndex(id => id.id === book.id)
     newBook[result] = book
-    console.log("newBook",newBook)
-    this.setState({newBook})
+    console.log("NEWB",newBook)
+    this.setState((prevState)=>({
+      books[result]: prevState[result]
+      console.log('prev',prevState)
+    }))
+    */
 })
   render() {
-    
+    console.log("before render",this.state.books)
     return(
     <div>
       <Route exact path = '/' render={() => (

@@ -7,9 +7,12 @@ import BookShelfManager from './BookShelfManager'
 
 
 class BookShelf extends Component {
+  constructor(props){
+    super(props)
+    this.onShelfChanger = this.onShelfChanger.bind(this)
+  }
   
   onShelfChanger = ((props)=> {
-    
     this.props.changeShelf(props)
   })
 

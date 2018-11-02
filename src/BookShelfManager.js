@@ -5,7 +5,10 @@ import PropTypes from 'prop-types'
 class BookShelfManager extends Component {
   constructor(props){
     super(props)
-    this.state = {value:"currentlyReading"}
+    this.state = {
+      value:"currentlyReading"
+    }
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
