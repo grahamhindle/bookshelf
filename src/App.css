@@ -84,7 +84,10 @@ body, .app {
   border: none;
   outline: none;
 }
-
+.showing-contacts {
+  text-align: center;
+  margin: 20px 0;
+}
 .close-search {
   display: block;
   top: 20px;

@@ -3,57 +3,68 @@ import './App.css';
 import PropTypes from 'prop-types'
 import Book from './Book'
 
-
-
 class BookSearch extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      searchCriteria: "",
-    }
-    this.onShelfChanger = this.onShelfChanger.bind(this)
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    onChangeBookStatus: PropTypes.func.isRequired,
   }
   
-
+    
   handleSubmit = ((e)=>{
     e.preventDefault();
-    //now search for books against searchCriteria
+    //in App Component
+    this.props.getQueryResults()
 
-    
   })
-  onShelfChanger = ((book)=> {
     
+updateQuery=((query)=>{
+  this.props.updateQuery(query)
+})
+  
+  onShelfChange = ((book)=> {
     this.props.onChangeBookStatus(book)
   })
 
+  
 
-  
-  
   render() {
-    
-    //const url = `url(${this.props.books.imagelinks.smallThumbnail})`
+
+     
     return (
       <div>
         <form onSubmit = {this.handleSubmit}>
           <div className="search-books">
             <div className="search-books-bar">
               <div className="search-books-input-wrapper">
-              <input type="text" value={this.state.value} placeholder="Search by title or author"/>
+              <input type="text" 
+                value={this.props.query} 
+                placeholder="Search by title or author"
+                onChange = {(event) => this.updateQuery(event.target.value)}/>
               </div>
             </div>
           </div>  
-        </form>
-        <div className="search-books-results">
-        <ol className="books-grid">
-              {this.props.books.map((book)=>(
-              <Book key = {book.id} 
-                book={book} 
-                changeShelf = {this.onShelfChanger}/>
-            ))}
-        </ol>
           
-        </div>
+          
+          <div className="search-books-results">
+            <div className="showing-contacts">
+              
+              {this.props.query !== ''? this.props.searchResults.length  === 0 ? 
+              <span>{`No results for query: ${this.props.query}`}</span> :
+              <span>{`There are ${this.props.searchResults.length} results for this Search: ${this.props.query}` }</span>
+              : <span></span>}
+          </div>
+          <ol className="books-grid">
+                {this.props.searchResults.map((book)=>(
+                <Book key = {book.id} 
+                  book={book} 
+                  updateQuery={this.updateQuery}
+                  changeShelf = {this.onShelfChange}/>
+              ))}
+          </ol>
+          </div>
+        </form>
       </div>
+      
     )
   }
 }

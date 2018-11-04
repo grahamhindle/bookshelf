@@ -2,11 +2,7 @@ import React,{Component} from 'react'
 import './App.css';
 import PropTypes from 'prop-types'
 import BookShelf from './BookShelf'
-import BookSearch from './BookSearch'
 import {Link} from 'react-router-dom'
-
-
-
 
 const bookshelves = [
   { id:0,shelfId:"currentlyReading", shelfName:"Currently Reading"},
@@ -16,18 +12,15 @@ const bookshelves = [
 ]
 
 class MyReads extends Component {
-  constructor(props){
-    super(props)
-    this.onUpdate = this.onUpdate.bind(this)
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    onChangeBookStatus: PropTypes.func.isRequired,
   }
-  
 
   onUpdate=((book)=> {
-    console.log("myreads func", book)
     this.props.onChangeBookStatus(book)
   })
-  render() {
-    
+  render() {  
     return(
       <div className="list-books">
         <div className="list-books-title">
@@ -35,14 +28,14 @@ class MyReads extends Component {
         </div>
         <div className="container">
           {bookshelves.map(shelf => (
-            <BookShelf
-              key={shelf.id}
-              shelf={shelf.shelfId}
-              name={shelf.shelfName}
-              books={this.props.books}
-              changeShelf={this.onUpdate}
-            />
-          ))}
+          <BookShelf
+            key={shelf.id}
+            shelf={shelf.shelfId}
+            name={shelf.shelfName}
+            books={this.props.books}
+            changeShelf={this.onUpdate}
+          />
+        ))}
         </div>
           <div className="open-search">
             <Link 
@@ -50,10 +43,7 @@ class MyReads extends Component {
               >Add a book
             </Link>
           </div>
-        
-        
       </div>
-    
     )
   }
 }
