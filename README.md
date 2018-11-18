@@ -1,5 +1,16 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# BookShelf
 
+This project is an application that enables you to maintain a
+collection of books in Book Shelves and categorize each book
+according to whether you are :
+        Currently reading the book
+        Want to read the book
+        Have alaready read the book
+Each book has a menu that enables you to move the book to another book shelf or delete the book from the shelves.
+
+It is also possible to search for books from a book server, and add them to your bookshelves by assigning a shelf to each book
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Available Scripts
 
 In the project directory, you can run:

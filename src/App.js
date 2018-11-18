@@ -30,7 +30,7 @@ class App extends Component {
   on
   ***************************************************/
   
-  updateStatus= ((book)=>{
+  updateStatus = ((book)=>{
     //update the status in the shelf
     let newBooks = this.state.books.map(b =>{
       if ( b.id !== book.id )return b
