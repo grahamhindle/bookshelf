@@ -3,30 +3,102 @@ import './App.css';
 import PropTypes from 'prop-types'
 import Book from './Book'
 import {Link} from 'react-router-dom'
+import  * as BooksAPI from './BooksAPI'
 
 class BookSearch extends Component {
+  constructor (props){
+    super(props)
+    this.state = 
+    {
+      queryString: '',
+      bookSearchResults: []
+    }
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
   static propTypes = {
     books: PropTypes.array.isRequired,
     onChangeBookStatus: PropTypes.func.isRequired,
-    getQueryResults: PropTypes.func.isRequired,
-    updateQuery: PropTypes.func.isRequired,
+  }
+
+  handleChange = () => {
+    this.setState({queryString: this.search.value}
+      ,()=>{
+        if( this.state.queryString && this.state.queryString.length > 0){
+            this.queryResults()
+        }
+      })
   }
   
-  handleSubmit = ((e)=>{
-    e.preventDefault();
-    this.props.getQueryResults()
-  })
+  handleSubmit (event){
+    event.preventDefault();
+    this.handleChange()
+  }
     
-  updateQuery=((query)=>{
-    this.props.updateQuery(query)
-  })
-    
-  onShelfChange = ((book)=> {
-    this.props.onChangeBookStatus(book)
+
+/****************************************************
+  SEARCH PATH - Query from backend server
+****************************************************/
+ queryResults=(()=>{
+    BooksAPI.search(this.state.queryString)
+    .then((queryResult )=>{
+    this.createSearchResults(queryResult) 
     })
+})
+
+
+/**********************************************************
+  SEARCH PATH
+  helper function to filter out books that we already have on 
+  our bookshelves after initial search load 
+  and set shelf status to none
+************************************************************/  
+ createSearchResults = ((res)=> {
+  if(res.length > 0 ){
+    //is the book already in our shelves ?
+    const newBooks = res
+    .filter(o => !this.props.books
+    .find(o2 => o.id === o2.id))
+    newBooks.map(book => book.shelf = "none")
+    this.setState(()=> ({
+      bookSearchResults: newBooks
+    }))
+  }
+  else {
+   this.setState(()=> ({
+      bookSearchResults: []
+    }))
+  }
+})
+
+  updateQuery=(()=>{
+    this.getQueryResults()
+  })
+  
+  
+  onShelfChange = ((book)=> {
+    this.bookMove(book)
+  })
+
+  /**********************************************************
+  SEARCH PATH
+  move book from search window and update books
+  ************************************************************/
+  bookMove = ((book)=>{
+    //add book to books
+    this.props.bookMove(book)
+    //remove from querylist
+    const newSearchList = this.state.bookSearchResults
+      .filter(b => b.id !== book.id)
+    this.setState(()=> ({
+      bookSearchResults: newSearchList
+    }))
+  })
+
 
   render() {
-    const {query, searchResults}= this.props;
+    const { bookSearchResults, queryString}= this.state;
     return (
       <div>
         <form onSubmit = {this.handleSubmit}>
@@ -36,22 +108,22 @@ class BookSearch extends Component {
               Close
             </Link>
               <div className="search-books-input-wrapper">
-              <input type="text" 
-                value={this.props.query} 
+              <input
+                ref = {input => this.search = input}
                 placeholder="Search by title or author"
-                onChange = {(event) => this.updateQuery(event.target.value)}/>
+                onChange = {this.handleChange}/>
               </div>
             </div>
           </div>  
           <div className="search-books-results">
             <div className="showing-contacts">
-              {this.props.query !== ''? searchResults.length  === 0 ? 
-              <span>{`No results for query: ${query}`}</span> :
-              <span>{`There are ${searchResults.length} results for this Search: ${query}` }</span>
+              {this.props.query !== ''? bookSearchResults.length  === 0 ? 
+              <span>{`No results for query: ${queryString}`}</span> :
+              <span>{`There are ${bookSearchResults.length} results for this Search: ${queryString}` }</span>
               : <span></span>}
           </div>
           <ol className="books-grid">
-                {searchResults.map((book)=>(
+                {bookSearchResults.map((book)=>(
                 <Book key = {book.id} 
                   book={book} 
                   updateQuery={this.updateQuery}

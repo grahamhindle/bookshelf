@@ -10,13 +10,16 @@ class BookShelf extends Component {
     books: PropTypes.array.isRequired,
     changeShelf: PropTypes.func.isRequired,
   }
-  
+  /*******************************************
+   * book has changed shelf
+   ******************************************/
   onShelfChange = ((props)=> {
     this.props.changeShelf(props)
   })
-
+  /*******************************************
+   * render the bookshelves
+   ******************************************/
   render(){
-    
     const filterBooks = this.props.books.filter(book => book.shelf === this.props.shelf)
     return(
       <div className ="listbooks-content">
@@ -25,12 +28,10 @@ class BookShelf extends Component {
           <div className="bookshelf-books">
             <ol className="books-grid">
               {filterBooks.map((book)=>(
-                <div>
-                  <Book key = {book.id} 
-                    book={book} 
-                    changeShelf = {this.onShelfChange}
-                  /> 
-                </div>
+                <Book key={book.id}
+                  book={book} 
+                  changeShelf = {this.onShelfChange}
+                />  
               ))}
             </ol>
           </div>
