@@ -23,9 +23,10 @@ class BookSearch extends Component {
   }
 
   handleChange = () => {
+    this.setState({bookSearchResults: []})
     this.setState({queryString: this.search.value}
       ,()=>{
-        if( this.state.queryString && this.state.queryString.length > 0){
+        if( this.state.queryString.length > 0){
             this.queryResults()
         }
       })
@@ -72,10 +73,6 @@ class BookSearch extends Component {
   }
 })
 
-  updateQuery=(()=>{
-    this.getQueryResults()
-  })
-  
   
   onShelfChange = ((book)=> {
     this.bookMove(book)
@@ -126,7 +123,6 @@ class BookSearch extends Component {
                 {bookSearchResults.map((book)=>(
                 <Book key = {book.id} 
                   book={book} 
-                  updateQuery={this.updateQuery}
                   changeShelf = {this.onShelfChange}/>
               ))}
           </ol>
