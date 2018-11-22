@@ -13,18 +13,16 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     //get ther initial books data
-    BooksAPI.getAll().then(books => {
-      this.setState(() => ({
-        books
-      }));
-    });
+    const books = await BooksAPI.getAll();
+    this.setState({ books });
   }
 
-  bookSave(book, shelf) {
+  async bookSave(book, shelf) {
     //save the current state of books
-    BooksAPI.update(book, shelf);
+    let result = await BooksAPI.update(book, shelf);
+    console.log(result);
   }
 
   /**************************************************
