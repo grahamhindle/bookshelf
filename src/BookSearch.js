@@ -49,36 +49,25 @@ class BookSearch extends Component {
   helper function to filter out books that we already have on 
   our bookshelves after initial search load 
   and set shelf status to none
+  todo: change the search filter to add shelf status 
+    for books already in shelf
 ************************************************************/
 
   createSearchResults = res => {
+    let newRes= []
     if (res.length > 0) {
-      const newRes = res.map(val => {
-        const b = this.props.books.find(() => {
-          val.id === b.id ? (val.shelf = b.shelf) : (val.shelf = "None");
-          console.log(val);
-        });
+      newRes = res.map((val) => {
+        const b = this.props.books.findIndex(id => id.id === val.id)
+          if (b >= 0 ){ 
+            val.shelf = this.props.books[b].shelf
+          }else{
+            val.shelf = 'none'
+          }
+         return val
       });
       this.setState(() => ({
-        bookSearchResults: newRes
+        bookSearchResults: newRes,
       }));
-      //is the book already in our shelves ?
-
-      /*
-      res.forEach(
-        o =>
-          (const result = this.props.books.find(o2 => {
-            if (result.id === o2.id) {
-              console.log("result", result.id);
-              console.log("books", o2);
-              o.shelf = o2.shelf;
-            }
-          }))
-      );
-      this.setState(() => ({
-        bookSearchResults: res
-      }));
-      */
     } else {
       this.setState(() => ({
         bookSearchResults: []

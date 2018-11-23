@@ -15,14 +15,25 @@ class App extends Component {
 
   async componentDidMount() {
     //get ther initial books data
-    const books = await BooksAPI.getAll();
-    this.setState({ books });
-  }
+   
+    try{
+      const books = await BooksAPI.getAll();
+      this.setState({ books });
+    }
+    catch (e) {
+      alert(" Mount",e.name);
+    }  
 
+  }
+  
   async bookSave(book, shelf) {
     //save the current state of books
-    let result = await BooksAPI.update(book, shelf);
-    console.log(result);
+    try {
+      await BooksAPI.update(book, shelf);
+    }
+    catch (e) {
+      alert(e.name)
+    }
   }
 
   /**************************************************
@@ -54,7 +65,6 @@ class App extends Component {
 ************************************************************/
   bookMove = book => {
     //add book to books
-    console.log("app.js", book.shelf);
     let newBooks = this.state.books;
     let c = newBooks.concat(book);
     this.setState(() => ({
