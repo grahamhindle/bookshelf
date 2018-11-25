@@ -38,7 +38,7 @@ class MyReads extends Component {
         </div>
           <div className="open-search">
             <Link 
-              to = '/booksearch'
+              to = '/Search'
               >Add a book
             </Link>
           </div>
