@@ -4,6 +4,7 @@ import MyReads from "./MyReads";
 import BookSearch from "./BookSearch";
 import * as BooksAPI from "./BooksAPI";
 import { Route } from "react-router-dom";
+import {concat,findIndex} from 'lodash';
 
 class App extends Component {
   constructor(props) {
@@ -50,9 +51,14 @@ async queryResults(queryString) {
   this.setState(() => ({
     queryString: queryString,
   }));
-  console.log(this.state.queryString)
-  const queryResult = await BooksAPI.search(this.state.queryString)
-  this.createSearchResults(queryResult);
+  try{
+    const queryResult = await BooksAPI.search(this.state.queryString)
+    this.createSearchResults(queryResult);
+  }
+  catch(e){
+    console.log("queryResult",e.message)
+  }
+
 }
 
 createSearchResults = res => {
@@ -113,9 +119,11 @@ x
     //add book to books
     
     let newBooks = this.state.books;
-    const b = newBooks.findIndex(id => id.id === book.id)
+    const b = findIndex(newBooks, (o=>{
+        return (o.id === book.id)
+    })) 
     if (b === -1){
-      const c = newBooks.concat(book);
+      const c = concat(newBooks,book);
       this.setState(() => ({
         books: c
       }))
