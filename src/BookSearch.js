@@ -30,7 +30,7 @@ class BookSearch extends Component {
         this.queryResults();
       }
     });
-    }, 1000
+    }, 250
   );
 
   handleSubmit(event) {
