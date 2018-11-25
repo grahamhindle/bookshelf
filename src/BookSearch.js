@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Book from "./Book";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
+import { debounce } from 'lodash';
 
 class BookSearch extends Component {
   constructor(props) {
@@ -21,14 +22,16 @@ class BookSearch extends Component {
     onChangeBookStatus: PropTypes.func.isRequired
   };
 
-  handleChange = () => {
+
+  handleChange = debounce(e => {
     this.setState({ bookSearchResults: [] });
     this.setState({ queryString: this.search.value }, () => {
       if (this.state.queryString.length > 0) {
         this.queryResults();
       }
     });
-  };
+    }, 1000
+  );
 
   handleSubmit(event) {
     event.preventDefault();
@@ -109,7 +112,7 @@ class BookSearch extends Component {
                 <input
                   ref={input => (this.search = input)}
                   placeholder="Search by title or author"
-                  onChange={this.handleChange}
+                  onChange={e => this.handleChange(e.target.value)}
                 />
               </div>
             </div>
