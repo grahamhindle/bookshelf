@@ -15,7 +15,7 @@ class BookSearch extends Component {
   }
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onChangeBookStatus: PropTypes.func.isRequired
+    
   };
 
 
@@ -30,15 +30,7 @@ class BookSearch extends Component {
   }
 
  
-  /**********************************************************
-  SEARCH PATH
-  helper function to filter out books that we already have on 
-  our bookshelves after initial search load 
-  and set shelf status to none
-  todo: change the search filter to add shelf status 
-    for books already in shelf
-************************************************************/
-
+  
   
 
   onShelfChange = book => {

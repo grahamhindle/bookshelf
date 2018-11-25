@@ -44,8 +44,12 @@ class App extends Component {
   SEARCH PATH - Query from backend server
 ****************************************************/
 async queryResults(queryString) {
-  this.setState({ bookSearchResults: [] })
-  this.setState({ queryString: queryString })
+  this.setState(() => ({
+    queryString: []
+  }));
+  this.setState(() => ({
+    queryString: queryString,
+  }));
   console.log(this.state.queryString)
   const queryResult = await BooksAPI.search(this.state.queryString)
   this.createSearchResults(queryResult);
@@ -83,33 +87,50 @@ createSearchResults = res => {
     //update the status in the shelf
     let newBooks = this.state.books.map(b => {
       if (b.id !== book.id) return b;
-      this.bookSave(book, book.shelf);
+      
       return {
         ...b,
         shelf: book.shelf
       };
     });
+
     //filter out the books that have status of none in bookshelf
     //and update state
     newBooks = newBooks.filter(b => b.shelf !== "none");
     this.setState(() => ({
       books: newBooks
     }));
+    
+    this.createSearchResults(book)
   };
-
+x
  
   /**********************************************************
-  add book from search window and update books
+  add book from search window and update books and then
+  update shelf on booksearch
 ************************************************************/
   bookMove = book => {
     //add book to books
+    
     let newBooks = this.state.books;
-    let c = newBooks.concat(book);
-    this.setState(() => ({
-      books: c
-    }));
+    const b = newBooks.findIndex(id => id.id === book.id)
+    if (b === -1){
+      const c = newBooks.concat(book);
+      this.setState(() => ({
+        books: c
+      }))
+    } else {
+       newBooks[b].shelf = book.shelf
+       this.setState(() => ({
+        books: newBooks
+      }))
+    }
+    
     this.bookSave(book, book.shelf);
-  };
+    //update the search rersults with new shelf
+    
+  }
+  
 
   /********************************************************
    render
