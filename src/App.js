@@ -9,8 +9,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: []
+      books: [],
+      bookSearchResults: [],
+      queryString: "",
+
     };
+    this.queryResults = this.queryResults.bind(this);
   }
 
   async componentDidMount() {
@@ -21,7 +25,7 @@ class App extends Component {
       this.setState({ books });
     }
     catch (e) {
-      alert(" Mount",e.name);
+      alert(" Mount",e.message);
     }  
 
   }
@@ -35,6 +39,39 @@ class App extends Component {
       alert(e.name)
     }
   }
+
+   /****************************************************
+  SEARCH PATH - Query from backend server
+****************************************************/
+async queryResults(queryString) {
+  this.setState({ bookSearchResults: [] })
+  this.setState({ queryString: queryString })
+  console.log(this.state.queryString)
+  const queryResult = await BooksAPI.search(this.state.queryString)
+  this.createSearchResults(queryResult);
+}
+
+createSearchResults = res => {
+  let newRes= []
+  if (res.length > 0) {
+    newRes = res.map((val) => {
+      const b = this.state.books.findIndex(id => id.id === val.id)
+        if (b >= 0 ){ 
+          val.shelf = this.state.books[b].shelf
+        }else{
+          val.shelf = 'none'
+        }
+       return val
+    });
+    this.setState(() => ({
+      bookSearchResults: newRes,
+    }));
+  } else {
+    this.setState(() => ({
+      bookSearchResults: []
+    }));
+  }
+};
 
   /**************************************************
   Update Book PATH
@@ -60,6 +97,7 @@ class App extends Component {
     }));
   };
 
+ 
   /**********************************************************
   add book from search window and update books
 ************************************************************/
@@ -94,8 +132,10 @@ class App extends Component {
           render={() => (
             <BookSearch
               books={this.state.books}
+              bookSearchResults = {this.state.bookSearchResults}
               bookMove={this.bookMove}
-              onChangeBookStatus={this.bookMove}
+              onChangeBookStatus={this.searchBookMove}
+              queryResults = {this.queryResults}
             />
           )}
         />
