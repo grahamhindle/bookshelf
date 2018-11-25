@@ -90,7 +90,7 @@ class App extends Component {
           )}
         />
         <Route
-          path="/booksearch"
+          path="/Search"
           render={() => (
             <BookSearch
               books={this.state.books}
