@@ -52,7 +52,7 @@ async queryResults(queryString) {
     queryString: queryString,
   }));
   try{
-    const queryResult = await BooksAPI.search(this.state.queryString)
+    const queryResult = await BooksAPI.search(queryString)
     this.createSearchResults(queryResult);
   }
   catch(e){
@@ -63,7 +63,7 @@ async queryResults(queryString) {
 
 createSearchResults = res => {
   let newRes= []
-  if (res.length > 0) {
+  if (res && res.length > 0) {
     newRes = res.map((val) => {
       const b = this.state.books.findIndex(id => id.id === val.id)
         if (b >= 0 ){ 
@@ -129,6 +129,7 @@ x
       }))
     } else {
        newBooks[b].shelf = book.shelf
+       console.log(newBooks[b].shelf)
        this.setState(() => ({
         books: newBooks
       }))
