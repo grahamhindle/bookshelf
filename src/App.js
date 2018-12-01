@@ -26,7 +26,7 @@ class App extends Component {
       this.setState({ books });
     }
     catch (e) {
-      alert(" Mount",e.message);
+      console.log(e.message);
     }  
 
   }
@@ -37,7 +37,7 @@ class App extends Component {
       await BooksAPI.update(book, shelf);
     }
     catch (e) {
-      alert(e.name)
+      console.log(e.message)
     }
   }
 
@@ -56,7 +56,7 @@ async queryResults(queryString) {
     this.createSearchResults(queryResult);
   }
   catch(e){
-    console.log("queryResult",e.message)
+    console.log(e.message)
   }
 
 }

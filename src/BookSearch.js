@@ -56,19 +56,6 @@ class BookSearch extends Component {
             </div>
           </div>
           <div className="search-books-results">
-            <div className="showing-contacts">
-              {this.props.query !== "" ? (
-                this.props.bookSearchResults.length === 0 ? (
-                  <span>{`No results for query: ${this.props.queryString}`}</span>
-                ) : (
-                  <span>{`There are ${
-                    this.props.bookSearchResults.length
-                  } results for this Search: ${this.props.queryString}`}</span>
-                )
-              ) : (
-                <span />
-              )}
-            </div>
             <ol className="books-grid">
               {this.props.bookSearchResults.map(book => (
                 <Book
