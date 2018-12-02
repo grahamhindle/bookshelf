@@ -42,7 +42,7 @@ class Book extends PureComponent {
     }
      
     
-    console.log(bookImage)
+    
     return(
       <li>
         <div className="book">

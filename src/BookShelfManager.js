@@ -11,8 +11,11 @@ class BookShelfManager extends Component {
     value:"currentlyReading"
   }
     
-  componentDidMount() {
-    this.setState({value: this.props.book.shelf})  
+  static getDerivedStateFromProps(nextProps,prevState) {
+    
+    return nextProps.shelf === prevState.shelf
+      ? {} : {value: nextProps.shelf}
+    
   }
 
   handleChange = ((e)=>{

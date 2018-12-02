@@ -129,7 +129,6 @@ x
       }))
     } else {
        newBooks[b].shelf = book.shelf
-       console.log(newBooks[b].shelf)
        this.setState(() => ({
         books: newBooks
       }))
