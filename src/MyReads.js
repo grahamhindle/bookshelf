@@ -14,6 +14,8 @@ const bookshelves = [
 class MyReads extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
+    onChangeBookStatus: PropTypes.func.isRequired,
+
   }
 
   onUpdate=((book)=> {
