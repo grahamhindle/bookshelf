@@ -1,30 +1,27 @@
-import React,{Component} from 'react'
+import React, {Component} from 'react';
 import './App.css';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 class BookShelfManager extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
     onUpdate: PropTypes.func.isRequired,
-  }
+  };
   state = {
-    value:"currentlyReading"
-  }
-    
-  static getDerivedStateFromProps(nextProps,prevState) {
-    
-    return nextProps.shelf === prevState.shelf
-      ? {} : {value: nextProps.shelf}
-    
+    value: 'currentlyReading',
+  };
+
+  static getDerivedStateFromProps (nextProps, prevState) {
+    return nextProps.shelf === prevState.shelf ? {} : {value: nextProps.shelf};
   }
 
-  handleChange = ((e)=>{
-    this.setState({value: e.target.value});
-    this.props.onUpdate(e.target.value)
-  })
+  handleChange = e => {
+    this.setState ({value: e.target.value});
+    this.props.onUpdate (e.target.value);
+  };
 
-  render() {
-    return(
+  render () {
+    return (
       <div className="book-shelf-changer">
         <select value={this.state.value} onChange={this.handleChange}>
           <option value="move" disabled>Move to...</option>
@@ -34,7 +31,7 @@ class BookShelfManager extends Component {
           <option value="none">None</option>
         </select>
       </div>
-    )
+    );
   }
 }
-export default BookShelfManager
+export default BookShelfManager;

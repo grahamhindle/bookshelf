@@ -1,67 +1,62 @@
-import React,{PureComponent } from 'react'
+import React, {PureComponent} from 'react';
 import './App.css';
-import PropTypes from 'prop-types'
-import BookShelfManager from './BookShelfManager'
-import { get } from 'lodash';
-import * as url from './icons/noimage.jpeg';
+import PropTypes from 'prop-types';
+import BookShelfManager from './BookShelfManager';
+import {get} from 'lodash';
+
 class Book extends PureComponent {
-  static propTypes ={
+  static propTypes = {
     book: PropTypes.object.isRequired,
     changeShelf: PropTypes.func.isRequired,
-  }
+  };
   state = {
-    book:[],
+    book: [],
+  };
+
+  componentDidMount () {
+    this.setState (() => ({
+      book: this.props.book,
+    }));
   }
 
-  componentDidMount(){ 
-    this.setState(()=>({
-      book: this.props.book
-    }))
-  }
-      
-  updateBookStatus=((value)=>{
-    let newBook = Object.assign({}, this.state.book)
-    newBook.shelf = value
-    this.setState({newBook})
-    this.props.changeShelf(newBook)
-  })
+  updateBookStatus = value => {
+    let newBook = Object.assign ({}, this.state.book);
+    newBook.shelf = value;
+    this.setState ({newBook});
+    this.props.changeShelf (newBook);
+  };
 
-  render(){
-    const book = this.props.book
-    let bookImage = ''
-   
-    bookImage = get(book,'imageLinks.thumbnail')
+  render () {
+    const book = this.props.book;
+
+    let bookImage = '';
+    const bookStyle = {};
+    bookImage = get (book, 'imageLinks.thumbnail');
+    bookStyle.width = 128;
+    bookStyle.height = 193;
     if (bookImage === undefined) {
-      bookImage = url
+      bookStyle.backgroundImage = 'none';
+    } else {
+      bookStyle.backgroundImage = 'url(' + bookImage + ')';
     }
-    
-    const bookStyle = {
-      width: 128,
-      height: 193,
-      backgroundImage: "url(" + bookImage + ")"
-    }
-     
-    
-    
-    return(
+
+    return (
       <li>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover"
-              style={bookStyle}>
-            </div>
-            <BookShelfManager 
-              key = {book.shelf}
+            <div className="book-cover" style={bookStyle} />
+            <BookShelfManager
+              key={book.shelf}
               shelf={book.shelf}
-              book = {book} 
-              onUpdate = {this.updateBookStatus}
+              book={book}
+              onUpdate={this.updateBookStatus}
             />
           </div>
         </div>
         <div className="book-title">{book.title}</div>
         <div className="book-authors">{book.authors}</div>
       </li>
-    )
+    );
   }
 }
-export default Book
+export default Book;

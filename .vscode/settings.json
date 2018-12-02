@@ -1,4 +1,10 @@
 {
   "editor.formatOnSave": true,
-  "javascript.format.enable": false
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true,
+  "flow.useNPMPackagedFlow": true,
+  "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+  "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+  "prettier.parser": "flow",
+  "flow.runOnAllFiles": true
 }

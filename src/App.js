@@ -160,10 +160,10 @@ x
           render={() => (
             <BookSearch
               books={this.state.books}
-              bookSearchResults = {this.state.bookSearchResults}
+              bookSearchResults={this.state.bookSearchResults}
               bookMove={this.bookMove}
               onChangeBookStatus={this.searchBookMove}
-              queryResults = {this.queryResults}
+              queryResults={this.queryResults}
             />
           )}
         />
