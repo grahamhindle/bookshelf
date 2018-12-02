@@ -136,8 +136,8 @@ x
     }
     
     this.bookSave(book, book.shelf);
-    //update the search rersults with new shelf
-    
+    //update the search results with new shelf
+    this.createSearchResults(book)
   }
   
 
@@ -153,7 +153,7 @@ x
           render={() => (
             <MyReads
               books={this.state.books}
-              onChangeBookStatus={this.updateStatus}
+              onChangeBookStatus={this.bookMove}
             />
           )}
         />
