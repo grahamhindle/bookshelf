@@ -2,7 +2,8 @@ import React,{PureComponent } from 'react'
 import './App.css';
 import PropTypes from 'prop-types'
 import BookShelfManager from './BookShelfManager'
-
+import { get } from 'lodash';
+import * as url from './icons/noimage.jpeg';
 class Book extends PureComponent {
   static propTypes ={
     book: PropTypes.object.isRequired,
@@ -27,13 +28,27 @@ class Book extends PureComponent {
 
   render(){
     const book = this.props.book
+    let bookImage = ''
+   
+    bookImage = get(book,'imageLinks.thumbnail')
+    if (bookImage === undefined) {
+      bookImage = url
+    }
+    
+    const bookStyle = {
+      width: 128,
+      height: 193,
+      backgroundImage: "url(" + bookImage + ")"
+    }
+     
+    
+    console.log(bookImage)
     return(
       <li>
         <div className="book">
           <div className="book-top">
             <div className="book-cover"
-              style={{ width: 128, height: 193, 
-              backgroundImage:`url(${book.imageLinks.thumbnail})`}}>
+              style={bookStyle}>
             </div>
             <BookShelfManager 
               key = {book.shelf}

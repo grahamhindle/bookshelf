@@ -136,8 +136,7 @@ x
     }
     
     this.bookSave(book, book.shelf);
-    //update the search results with new shelf
-    this.createSearchResults(book)
+    
   }
   
 
