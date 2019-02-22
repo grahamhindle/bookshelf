@@ -1,14 +1,15 @@
-# BookShelf
+# Would You Rather
 
-This project is an application that enables you to maintain a
-collection of books in Book Shelves and categorize each book
-according to whether you are :
-        Currently reading the book
-        Want to read the book
-        Have alaready read the book
-Each book has a menu that enables you to move the book to another book shelf or delete the book from the shelves.
 
-It is also possible to search for books from a book server, and add them to your bookshelves by assigning a shelf to each book
+This project is an application that implemets the popular game of decisions.
+You are presented with a list of questions submitted by other users, and you must select one of the options presented.
+You can also : 
+        
+* submit new question - you must format the questions with a clear option to choose
+* view the result of each question
+* see where you stand on the leader board
+        
+![Example screen ]('../images/demo.png')
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Available Scripts
